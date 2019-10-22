@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{48b62505-2420-4b0c-80ca-cf60eb2312ab}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -59,5 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Table_Test.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.Testing_Data.sql" />
   </ItemGroup>
 </Project>
