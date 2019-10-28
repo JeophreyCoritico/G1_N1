@@ -4,5 +4,6 @@ CREATE TABLE [dbo].[Student]
     [GivenName] NCHAR(100) NOT NULL,
 	[Surname] NCHAR(100) NOT NULL,
 	[StudentID] INT NOT NULL,
-    FOREIGN KEY (GroupNumber) REFERENCES [dbo].[Group]
+	[GroupNumber] INT NOT NuLL,
+    FOREIGN KEY (GroupNumber) REFERENCES [dbo].[_Group]
 )
