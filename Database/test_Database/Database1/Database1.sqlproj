@@ -59,6 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Table_Test.sql" />
+    <Build Include="attendance.sql" />
+    <Build Include="class.sql" />
+    <Build Include="group.sql" />
+    <Build Include="room.sql" />
+    <Build Include="student.sql" />
+    <Build Include="teacher.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.Testing_Data.sql" />
