@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "Database1"
 :setvar DefaultFilePrefix "Database1"
-:setvar DefaultDataPath "C:\Users\atzin\AppData\Local\Microsoft\VisualStudio\SSDT\test_Database"
-:setvar DefaultLogPath "C:\Users\atzin\AppData\Local\Microsoft\VisualStudio\SSDT\test_Database"
+:setvar DefaultDataPath "C:\Users\102575814\AppData\Local\Microsoft\VisualStudio\SSDT\test_Database"
+:setvar DefaultLogPath "C:\Users\102575814\AppData\Local\Microsoft\VisualStudio\SSDT\test_Database"
 
 GO
 :on error exit
@@ -82,6 +82,93 @@ IF EXISTS (SELECT 1
 
 
 GO
+PRINT N'Creating [dbo].[_Group]...';
+
+
+GO
+CREATE TABLE [dbo].[_Group] (
+    [GroupNumber] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([GroupNumber] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Attendance]...';
+
+
+GO
+CREATE TABLE [dbo].[Attendance] (
+    [SignIn]      DATETIME       NOT NULL,
+    [SignOut]     DATETIME       NOT NULL,
+    [TeacherID]   INT            NOT NULL,
+    [GroupNumber] INT            NOT NULL,
+    [SubjectCode] NVARCHAR (30)  NOT NULL,
+    [RoomNo]      NVARCHAR (100) NOT NULL,
+    [Barcode]     INT            NOT NULL,
+    [EarlyLeave]  BIT            NULL,
+    [Late]        BIT            NULL,
+    PRIMARY KEY CLUSTERED ([SignIn] ASC, [SignOut] ASC, [TeacherID] ASC, [GroupNumber] ASC, [SubjectCode] ASC, [RoomNo] ASC, [Barcode] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Class]...';
+
+
+GO
+CREATE TABLE [dbo].[Class] (
+    [TeacherID]   INT            NOT NULL,
+    [GroupNumber] INT            NOT NULL,
+    [SubjectCode] NVARCHAR (30)  NOT NULL,
+    [RoomNo]      NVARCHAR (100) NOT NULL,
+    [Day]         NVARCHAR (30)  NOT NULL,
+    [Description] NVARCHAR (200) NOT NULL,
+    [StartTime]   TIME (7)       NOT NULL,
+    [EndTime]     TIME (7)       NOT NULL,
+    [Capacity]    INT            NOT NULL,
+    PRIMARY KEY CLUSTERED ([TeacherID] ASC, [GroupNumber] ASC, [SubjectCode] ASC, [RoomNo] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[room]...';
+
+
+GO
+CREATE TABLE [dbo].[room] (
+    [RoomNo] NVARCHAR (100) NOT NULL,
+    PRIMARY KEY CLUSTERED ([RoomNo] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Student]...';
+
+
+GO
+CREATE TABLE [dbo].[Student] (
+    [Barcode]     INT         NOT NULL,
+    [GroupNumber] INT         NOT NULL,
+    [GivenName]   NCHAR (100) NOT NULL,
+    [Surname]     NCHAR (100) NOT NULL,
+    [StudentID]   INT         NOT NULL,
+    PRIMARY KEY CLUSTERED ([Barcode] ASC, [GroupNumber] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[subject]...';
+
+
+GO
+CREATE TABLE [dbo].[subject] (
+    [SubjectCode] NVARCHAR (30)  NOT NULL,
+    [Description] NVARCHAR (100) NOT NULL,
+    PRIMARY KEY CLUSTERED ([SubjectCode] ASC)
+);
+
+
+GO
 PRINT N'Creating [dbo].[Table_Test]...';
 
 
@@ -91,6 +178,83 @@ CREATE TABLE [dbo].[Table_Test] (
     [Tests] NCHAR (10) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+
+GO
+PRINT N'Creating [dbo].[Teacher]...';
+
+
+GO
+CREATE TABLE [dbo].[Teacher] (
+    [TeacherID]       INT            NOT NULL,
+    [GivenName]       NVARCHAR (100) NOT NULL,
+    [Surname]         NVARCHAR (100) NOT NULL,
+    [TeacherPassword] NVARCHAR (100) NOT NULL,
+    PRIMARY KEY CLUSTERED ([TeacherID] ASC)
+);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Attendance]...';
+
+
+GO
+ALTER TABLE [dbo].[Attendance] WITH NOCHECK
+    ADD FOREIGN KEY ([TeacherID], [GroupNumber], [SubjectCode], [RoomNo]) REFERENCES [dbo].[Class] ([TeacherID], [GroupNumber], [SubjectCode], [RoomNo]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Attendance]...';
+
+
+GO
+ALTER TABLE [dbo].[Attendance] WITH NOCHECK
+    ADD FOREIGN KEY ([Barcode], [GroupNumber]) REFERENCES [dbo].[Student] ([Barcode], [GroupNumber]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Class]...';
+
+
+GO
+ALTER TABLE [dbo].[Class] WITH NOCHECK
+    ADD FOREIGN KEY ([TeacherID]) REFERENCES [dbo].[Teacher] ([TeacherID]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Class]...';
+
+
+GO
+ALTER TABLE [dbo].[Class] WITH NOCHECK
+    ADD FOREIGN KEY ([GroupNumber]) REFERENCES [dbo].[_Group] ([GroupNumber]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Class]...';
+
+
+GO
+ALTER TABLE [dbo].[Class] WITH NOCHECK
+    ADD FOREIGN KEY ([SubjectCode]) REFERENCES [dbo].[subject] ([SubjectCode]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Class]...';
+
+
+GO
+ALTER TABLE [dbo].[Class] WITH NOCHECK
+    ADD FOREIGN KEY ([RoomNo]) REFERENCES [dbo].[room] ([RoomNo]);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Student]...';
+
+
+GO
+ALTER TABLE [dbo].[Student] WITH NOCHECK
+    ADD FOREIGN KEY ([GroupNumber]) REFERENCES [dbo].[_Group] ([GroupNumber]);
 
 
 GO
@@ -112,6 +276,93 @@ INSERT INTO Table_Test (Id, Tests) VALUES
 (2,'Nope'),
 (3,'Yes')
 GO
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+CREATE TABLE [#__checkStatus] (
+    id           INT            IDENTITY (1, 1) PRIMARY KEY CLUSTERED,
+    [Schema]     NVARCHAR (256),
+    [Table]      NVARCHAR (256),
+    [Constraint] NVARCHAR (256)
+);
+
+SET NOCOUNT ON;
+
+DECLARE tableconstraintnames CURSOR LOCAL FORWARD_ONLY
+    FOR SELECT SCHEMA_NAME([schema_id]),
+               OBJECT_NAME([parent_object_id]),
+               [name],
+               0
+        FROM   [sys].[objects]
+        WHERE  [parent_object_id] IN (OBJECT_ID(N'dbo.Attendance'), OBJECT_ID(N'dbo.Class'), OBJECT_ID(N'dbo.Student'))
+               AND [type] IN (N'F', N'C')
+                   AND [object_id] IN (SELECT [object_id]
+                                       FROM   [sys].[check_constraints]
+                                       WHERE  [is_not_trusted] <> 0
+                                              AND [is_disabled] = 0
+                                       UNION
+                                       SELECT [object_id]
+                                       FROM   [sys].[foreign_keys]
+                                       WHERE  [is_not_trusted] <> 0
+                                              AND [is_disabled] = 0);
+
+DECLARE @schemaname AS NVARCHAR (256);
+
+DECLARE @tablename AS NVARCHAR (256);
+
+DECLARE @checkname AS NVARCHAR (256);
+
+DECLARE @is_not_trusted AS INT;
+
+DECLARE @statement AS NVARCHAR (1024);
+
+BEGIN TRY
+    OPEN tableconstraintnames;
+    FETCH tableconstraintnames INTO @schemaname, @tablename, @checkname, @is_not_trusted;
+    WHILE @@fetch_status = 0
+        BEGIN
+            PRINT N'Checking constraint: ' + @checkname + N' [' + @schemaname + N'].[' + @tablename + N']';
+            SET @statement = N'ALTER TABLE [' + @schemaname + N'].[' + @tablename + N'] WITH ' + CASE @is_not_trusted WHEN 0 THEN N'CHECK' ELSE N'NOCHECK' END + N' CHECK CONSTRAINT [' + @checkname + N']';
+            BEGIN TRY
+                EXECUTE [sp_executesql] @statement;
+            END TRY
+            BEGIN CATCH
+                INSERT  [#__checkStatus] ([Schema], [Table], [Constraint])
+                VALUES                  (@schemaname, @tablename, @checkname);
+            END CATCH
+            FETCH tableconstraintnames INTO @schemaname, @tablename, @checkname, @is_not_trusted;
+        END
+END TRY
+BEGIN CATCH
+    PRINT ERROR_MESSAGE();
+END CATCH
+
+IF CURSOR_STATUS(N'LOCAL', N'tableconstraintnames') >= 0
+    CLOSE tableconstraintnames;
+
+IF CURSOR_STATUS(N'LOCAL', N'tableconstraintnames') = -1
+    DEALLOCATE tableconstraintnames;
+
+SELECT N'Constraint verification failed:' + [Schema] + N'.' + [Table] + N',' + [Constraint]
+FROM   [#__checkStatus];
+
+IF @@ROWCOUNT > 0
+    BEGIN
+        DROP TABLE [#__checkStatus];
+        RAISERROR (N'An error occurred while verifying constraints', 16, 127);
+    END
+
+SET NOCOUNT OFF;
+
+DROP TABLE [#__checkStatus];
+
 
 GO
 PRINT N'Update complete.';
