@@ -1,9 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\API",
+    "\\API\\WebApplication1",
     "\\Database",
-    "\\Database\\test_Database"
+    "\\Database\\test_Database",
+    "\\Database\\test_Database\\Database1",
+    "\\packages"
   ],
-  "SelectedNode": "\\Database\\test_Database\\test_Database.sln",
+  "SelectedNode": "\\API",
   "PreviewInSolutionExplorer": false
 }

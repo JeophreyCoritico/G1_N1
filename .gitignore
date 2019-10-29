@@ -207,6 +207,10 @@ Package.StoreAssociation.xml
 _pkginfo.txt
 *.appx
 
+
+/Database/test_Database/Database1/Database1.dbmdl
+/Database/test_Database/Database1/Database1.jfm
+
 # Visual Studio cache files
 # files ending in .cache can be ignored
 *.[Cc]ache
