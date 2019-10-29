@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Database",
+    "\\Database\\test_Database"
   ],
+  "SelectedNode": "\\Database\\test_Database\\test_Database.sln",
   "PreviewInSolutionExplorer": false
 }
