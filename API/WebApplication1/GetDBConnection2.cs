@@ -12,7 +12,7 @@ namespace ExampleWebAPI
         public static SqlConnection GetConnection()
         {
             //@"Server=myServerAddress;Database=myDatabase;User Id=MyUsername;Password=myPassword;"
-            string ConnString = @"Server = swin.database.windows.net;Database = DAD;User Id = DAD;Password = R@ndom!1;";
+            string ConnString = @"Server = dadtj.database.windows.net;Database = DADExample;User Id = dbstudent;Password = abc1234!;";
             return new SqlConnection(ConnString);
         }
     }
