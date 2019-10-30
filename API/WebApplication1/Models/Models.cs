@@ -24,4 +24,18 @@ namespace WebApplication1.Models
         }
 
     }
+
+    public class RoomModel
+    {
+        public string RoomNo { get; set; }
+
+        public RoomModel()
+        { }
+
+        public RoomModel(string RNUM)
+        {
+            RoomNo = RNUM;
+        }
+
+    }
 }
