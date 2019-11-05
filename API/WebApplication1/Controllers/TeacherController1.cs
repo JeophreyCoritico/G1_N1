@@ -50,6 +50,7 @@ namespace ExampleWebAPI.Controllers
                         ", TeacherPassword: " + rdr.GetValue(3));
                     //output.Add(new TeacherModel(
                     //            tIDint, 
+                    //  int32.Parse(rdr.GetValue(0).ToString())
                     //            rdr.GetValue(1).ToString(),
                     //            rdr.GetValue(2).ToString(),
                     //            rdr.GetValue(3).ToString()));
