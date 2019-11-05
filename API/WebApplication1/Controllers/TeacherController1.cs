@@ -11,10 +11,9 @@ namespace ExampleWebAPI.Controllers
 {
     public class TeacherController : ApiController
     {
-
-
         // GET: api/Teacher
-        public IEnumerable<TeacherModel> Get()
+        public IEnumerable<string> Get()
+            //public IEnumerable<TeacherModel> Get()
         {
             //return new string[] { "value1"};
 
@@ -23,7 +22,8 @@ namespace ExampleWebAPI.Controllers
             SqlCommand cmd;
             SqlDataReader rdr;
             string query;
-            List<TeacherModel> output = new List<TeacherModel>();
+            //List<TeacherModel> output = new List<TeacherModel>();
+            List<string> output = new List<string>();
 
             try
             {
@@ -36,31 +36,32 @@ namespace ExampleWebAPI.Controllers
                 //read the data for that command
                 rdr = cmd.ExecuteReader();
 
-                int tIDint = 0;
-                string tID = rdr.GetValue(0).ToString();
-                tIDint = int.Parse(tID);
-                tIDint = Convert.ToInt32(tID);
+                //int tIDint = 0;
+                //string tID = rdr.GetValue(0).ToString();
+                //tIDint = int.Parse(tID);
+                //tIDint = Convert.ToInt32(tID);
 
                 while (rdr.Read())
                 {
-                    //output.Add(
-                    //    "{TeacherID: " + rdr.GetValue(0) +
-                    //    ", GivenName: \"" + rdr.GetValue(1) + "\"" +
-                    //    ", Surname: \"" + rdr.GetValue(2) + "\"" +
-                    //    ", TeacherPassword: \"" + rdr.GetValue(3) + "\"}");
-                    output.Add(new TeacherModel(
-                                tIDint, 
-                                rdr.GetValue(1).ToString(),
-                                rdr.GetValue(2).ToString(),
-                                rdr.GetValue(3).ToString()));
+                    output.Add(
+                        "TeacherID: " + rdr.GetValue(0) +
+                        ", GivenName: " + rdr.GetValue(1) + 
+                        ", Surname: " + rdr.GetValue(2) + 
+                        ", TeacherPassword: " + rdr.GetValue(3));
+                    //output.Add(new TeacherModel(
+                    //            tIDint, 
+                    //            rdr.GetValue(1).ToString(),
+                    //            rdr.GetValue(2).ToString(),
+                    //            rdr.GetValue(3).ToString()));
                 }
 
             }
             catch (Exception e)
             {
-                //output.Clear();
-                //output.Add(e.Message);
-                throw e;
+                output.Clear();
+                output.Add(e.Message);
+
+                //throw e;
             }
             finally
             {
