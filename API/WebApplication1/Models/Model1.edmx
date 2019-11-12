@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DADExampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="_Group">
+          <Key>
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="SignIn" />
+            <PropertyRef Name="SignOut" />
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="SignIn" Type="datetime" Nullable="false" />
+          <Property Name="SignOut" Type="datetime" Nullable="false" />
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Barcode" Type="int" Nullable="false" />
+          <Property Name="EarlyLeave" Type="bit" />
+          <Property Name="Late" Type="bit" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Day" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="room">
+          <Key>
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="RoomNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Barcode" />
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="Barcode" Type="int" Nullable="false" />
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+          <Property Name="GivenName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subject">
+          <Key>
+            <PropertyRef Name="SubjectCode" />
+          </Key>
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Tests" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+          <Property Name="GivenName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TeacherPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DADExample.dbo.Query1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Query1">
+          <Key>
+            <PropertyRef Name="GivenName" />
+            <PropertyRef Name="Surname" />
+            <PropertyRef Name="TourName" />
+            <PropertyRef Name="EventYear" />
+            <PropertyRef Name="EventMonth" />
+            <PropertyRef Name="EventDay" />
+          </Key>
+          <Property Name="GivenName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TourName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="EventYear" Type="int" Nullable="false" />
+          <Property Name="EventMonth" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="EventDay" Type="int" Nullable="false" />
+          <Property Name="Payment" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DADExample.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Attendance__3FA65AF7">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendance__409A7F30">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__GroupNumb__4282C7A2">
+          <End Role="_Group" Type="Self._Group" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__RoomNo__446B1014">
+          <End Role="room" Type="Self.room" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="room">
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__SubjectCo__4376EBDB">
+          <End Role="subject" Type="Self.subject" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subject">
+              <PropertyRef Name="SubjectCode" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="SubjectCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__TeacherID__418EA369">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__GroupNu__455F344D">
+          <End Role="_Group" Type="Self._Group" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ADD_CUSTOMER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PCUSTID" Type="int" Mode="In" />
+          <Parameter Name="PCUSTNAME" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ADD_EMPLOYEE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StaffID" Type="int" Mode="In" />
+          <Parameter Name="GivenName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Surname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DELETE_ALL_CUSTOMER" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="DADExampleModelStoreContainer">
+          <EntitySet Name="_Group" EntityType="Self._Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="room" EntityType="Self.room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subject" EntityType="Self.subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Test" EntityType="Self.Table_Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Query1" EntityType="Self.Query1" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Query1].[GivenName] AS [GivenName], 
+    [Query1].[Surname] AS [Surname], 
+    [Query1].[TourName] AS [TourName], 
+    [Query1].[Description] AS [Description], 
+    [Query1].[EventYear] AS [EventYear], 
+    [Query1].[EventMonth] AS [EventMonth], 
+    [Query1].[EventDay] AS [EventDay], 
+    [Query1].[Payment] AS [Payment]
+    FROM [dbo].[Query1] AS [Query1]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Attendance__3FA65AF7" Association="Self.FK__Attendance__3FA65AF7">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendance__409A7F30" Association="Self.FK__Attendance__409A7F30">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__GroupNumb__4282C7A2" Association="Self.FK__Class__GroupNumb__4282C7A2">
+            <End Role="_Group" EntitySet="_Group" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__RoomNo__446B1014" Association="Self.FK__Class__RoomNo__446B1014">
+            <End Role="room" EntitySet="room" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__SubjectCo__4376EBDB" Association="Self.FK__Class__SubjectCo__4376EBDB">
+            <End Role="subject" EntitySet="subject" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__TeacherID__418EA369" Association="Self.FK__Class__TeacherID__418EA369">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__GroupNu__455F344D" Association="Self.FK__Student__GroupNu__455F344D">
+            <End Role="_Group" EntitySet="_Group" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DADExampleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C_Group">
+          <Key>
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Class__GroupNumb__4282C7A2" FromRole="C_Group" ToRole="Class" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Student__GroupNu__455F344D" FromRole="C_Group" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="SignIn" />
+            <PropertyRef Name="SignOut" />
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="SignIn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SignOut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <Property Name="SubjectCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Barcode" Type="Int32" Nullable="false" />
+          <Property Name="EarlyLeave" Type="Boolean" />
+          <Property Name="Late" Type="Boolean" />
+          <NavigationProperty Name="Class" Relationship="Self.FK__Attendance__3FA65AF7" FromRole="Attendance" ToRole="Class" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__Attendance__409A7F30" FromRole="Attendance" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <Property Name="SubjectCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Day" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C_Group" Relationship="Self.FK__Class__GroupNumb__4282C7A2" FromRole="Class" ToRole="C_Group" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK__Attendance__3FA65AF7" FromRole="Class" ToRole="Attendance" />
+          <NavigationProperty Name="room" Relationship="Self.FK__Class__RoomNo__446B1014" FromRole="Class" ToRole="room" />
+          <NavigationProperty Name="subject" Relationship="Self.FK__Class__SubjectCo__4376EBDB" FromRole="Class" ToRole="subject" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK__Class__TeacherID__418EA369" FromRole="Class" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="room">
+          <Key>
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Class__RoomNo__446B1014" FromRole="room" ToRole="Class" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Barcode" />
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="Barcode" Type="Int32" Nullable="false" />
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <Property Name="GivenName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C_Group" Relationship="Self.FK__Student__GroupNu__455F344D" FromRole="Student" ToRole="C_Group" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK__Attendance__409A7F30" FromRole="Student" ToRole="Attendance" />
+        </EntityType>
+        <EntityType Name="subject">
+          <Key>
+            <PropertyRef Name="SubjectCode" />
+          </Key>
+          <Property Name="SubjectCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Class__SubjectCo__4376EBDB" FromRole="subject" ToRole="Class" />
+        </EntityType>
+        <EntityType Name="Table_Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Tests" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="GivenName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeacherPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Class__TeacherID__418EA369" FromRole="Teacher" ToRole="Class" />
+        </EntityType>
+        <EntityType Name="Query1">
+          <Key>
+            <PropertyRef Name="GivenName" />
+            <PropertyRef Name="Surname" />
+            <PropertyRef Name="TourName" />
+            <PropertyRef Name="EventYear" />
+            <PropertyRef Name="EventMonth" />
+            <PropertyRef Name="EventDay" />
+          </Key>
+          <Property Name="GivenName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TourName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EventYear" Type="Int32" Nullable="false" />
+          <Property Name="EventMonth" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EventDay" Type="Int32" Nullable="false" />
+          <Property Name="Payment" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK__Class__GroupNumb__4282C7A2">
+          <End Role="C_Group" Type="Self.C_Group" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__GroupNu__455F344D">
+          <End Role="C_Group" Type="Self.C_Group" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendance__3FA65AF7">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendance__409A7F30">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__RoomNo__446B1014">
+          <End Role="room" Type="Self.room" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="room">
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__SubjectCo__4376EBDB">
+          <End Role="subject" Type="Self.subject" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subject">
+              <PropertyRef Name="SubjectCode" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="SubjectCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Class__TeacherID__418EA369">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Class" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DADExampleEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C_Group" EntityType="Self.C_Group" />
+          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="rooms" EntityType="Self.room" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="subjects" EntityType="Self.subject" />
+          <EntitySet Name="Table_Test" EntityType="Self.Table_Test" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Query1" EntityType="Self.Query1" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <AssociationSet Name="FK__Class__GroupNumb__4282C7A2" Association="Self.FK__Class__GroupNumb__4282C7A2">
+            <End Role="C_Group" EntitySet="C_Group" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__GroupNu__455F344D" Association="Self.FK__Student__GroupNu__455F344D">
+            <End Role="C_Group" EntitySet="C_Group" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendance__3FA65AF7" Association="Self.FK__Attendance__3FA65AF7">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendance__409A7F30" Association="Self.FK__Attendance__409A7F30">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__RoomNo__446B1014" Association="Self.FK__Class__RoomNo__446B1014">
+            <End Role="room" EntitySet="rooms" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__SubjectCo__4376EBDB" Association="Self.FK__Class__SubjectCo__4376EBDB">
+            <End Role="subject" EntitySet="subjects" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Class__TeacherID__418EA369" Association="Self.FK__Class__TeacherID__418EA369">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <FunctionImport Name="ADD_CUSTOMER">
+            <Parameter Name="PCUSTID" Mode="In" Type="Int32" />
+            <Parameter Name="PCUSTNAME" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ADD_EMPLOYEE">
+            <Parameter Name="StaffID" Mode="In" Type="Int32" />
+            <Parameter Name="GivenName" Mode="In" Type="String" />
+            <Parameter Name="Surname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DELETE_ALL_CUSTOMER" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DADExampleModelStoreContainer" CdmEntityContainer="DADExampleEntities">
+          <EntitySetMapping Name="C_Group">
+            <EntityTypeMapping TypeName="DADExampleModel.C_Group">
+              <MappingFragment StoreEntitySet="_Group">
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="DADExampleModel.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="SignIn" ColumnName="SignIn" />
+                <ScalarProperty Name="SignOut" ColumnName="SignOut" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="EarlyLeave" ColumnName="EarlyLeave" />
+                <ScalarProperty Name="Late" ColumnName="Late" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="DADExampleModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rooms">
+            <EntityTypeMapping TypeName="DADExampleModel.room">
+              <MappingFragment StoreEntitySet="room">
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="DADExampleModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subjects">
+            <EntityTypeMapping TypeName="DADExampleModel.subject">
+              <MappingFragment StoreEntitySet="subject">
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Test">
+            <EntityTypeMapping TypeName="DADExampleModel.Table_Test">
+              <MappingFragment StoreEntitySet="Table_Test">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tests" ColumnName="Tests" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="DADExampleModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="TeacherPassword" ColumnName="TeacherPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Query1">
+            <EntityTypeMapping TypeName="DADExampleModel.Query1">
+              <MappingFragment StoreEntitySet="Query1">
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="TourName" ColumnName="TourName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="EventYear" ColumnName="EventYear" />
+                <ScalarProperty Name="EventMonth" ColumnName="EventMonth" />
+                <ScalarProperty Name="EventDay" ColumnName="EventDay" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="DADExampleModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ADD_CUSTOMER" FunctionName="DADExampleModel.Store.ADD_CUSTOMER" />
+          <FunctionImportMapping FunctionImportName="ADD_EMPLOYEE" FunctionName="DADExampleModel.Store.ADD_EMPLOYEE" />
+          <FunctionImportMapping FunctionImportName="DELETE_ALL_CUSTOMER" FunctionName="DADExampleModel.Store.DELETE_ALL_CUSTOMER" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

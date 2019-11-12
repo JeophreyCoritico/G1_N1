@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7c7239c1b3424d8aa182d0fc70465a8c" Name="Diagram1">
+        <EntityTypeShape EntityType="DADExampleModel.C_Group" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.Attendance" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.Class" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.room" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.Student" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.subject" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.Table_Test" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.Teacher" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.Query1" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADExampleModel.database_firewall_rules" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="DADExampleModel.FK__Class__GroupNumb__4282C7A2" ManuallyRouted="false" />
+        <AssociationConnector Association="DADExampleModel.FK__Student__GroupNu__455F344D" ManuallyRouted="false" />
+        <AssociationConnector Association="DADExampleModel.FK__Attendance__3FA65AF7" ManuallyRouted="false" />
+        <AssociationConnector Association="DADExampleModel.FK__Attendance__409A7F30" ManuallyRouted="false" />
+        <AssociationConnector Association="DADExampleModel.FK__Class__RoomNo__446B1014" ManuallyRouted="false" />
+        <AssociationConnector Association="DADExampleModel.FK__Class__SubjectCo__4376EBDB" ManuallyRouted="false" />
+        <AssociationConnector Association="DADExampleModel.FK__Class__TeacherID__418EA369" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
