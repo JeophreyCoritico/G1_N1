@@ -23,6 +23,12 @@ namespace WebApplication1.Models
         public string SubjectCode { get; set; }
         public string Description { get; set; }
     
+        public subject(string SubCode, string SubDesc)
+        {
+            SubjectCode = SubCode;
+            Description = SubDesc;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Class> Classes { get; set; }
     }
