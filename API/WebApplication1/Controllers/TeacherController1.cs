@@ -13,7 +13,7 @@ namespace ExampleWebAPI.Controllers
     public class TeacherController : ApiController
     {
         // GET: api/Teacher
-        public IEnumerable<string> Get()
+        public IEnumerable<TeacherModel> Get()
             //public IEnumerable<TeacherModel> Get()
         {
             //return new string[] { "value1"};
@@ -24,7 +24,7 @@ namespace ExampleWebAPI.Controllers
             SqlDataReader rdr;
             string query;
             //List<TeacherModel> output = new List<TeacherModel>();
-            List<string> output = new List<string>();
+            List<TeacherModel> output = new List<TeacherModel>();
 
             try
             {
@@ -44,24 +44,36 @@ namespace ExampleWebAPI.Controllers
 
                 while (rdr.Read())
                 {
+                    /*
                     output.Add(
                         "TeacherID: " + rdr.GetValue(0) +
                         ", GivenName: " + rdr.GetValue(1) + 
                         ", Surname: " + rdr.GetValue(2) + 
                         ", TeacherPassword: " + rdr.GetValue(3));
-                    //output.Add(new TeacherModel(
-                    //            tIDint, 
-                    //  int32.Parse(rdr.GetValue(0).ToString())
-                    //            rdr.GetValue(1).ToString(),
-                    //            rdr.GetValue(2).ToString(),
-                    //            rdr.GetValue(3).ToString()));
+
+                    */
+
+
+                    output.Add(new TeacherModel(Int32.Parse(rdr["TeacherID"].ToString()),
+                                                rdr["GivenName"].ToString(),
+                                                rdr["Surname"].ToString(),
+                                                rdr["TeacherPassword"].ToString()));
+
+
+
+                        /*
+                                tIDint, 
+                      int32.Parse(rdr.GetValue(0).ToString())
+                                rdr.GetValue(1).ToString(),
+                                rdr.GetValue(2).ToString(),
+                                rdr.GetValue(3).ToString()));
+                                */
                 }
 
             }
             catch (Exception e)
             {
-                output.Clear();
-                output.Add(e.Message);
+                throw e;
 
                 //throw e;
             }
