@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.Models;
+using System.Data.SqlClient;
 
 namespace WebApplication1.Controllers
 {
@@ -19,6 +20,13 @@ namespace WebApplication1.Controllers
         // GET: api/C_Group
         public IQueryable<C_Group> GetC_Group()
         {
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            SqlDataReader rdr;
+            string query;
+            List<TeacherModel> output = new List<TeacherModel>();
+
             return db.C_Group;
         }
 
