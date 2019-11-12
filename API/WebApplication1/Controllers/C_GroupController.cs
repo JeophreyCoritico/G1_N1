@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.Models;
 using System.Data.SqlClient;
+using ExampleWebAPI;
 
 namespace WebApplication1.Controllers
 {
@@ -18,17 +19,43 @@ namespace WebApplication1.Controllers
         private DADExampleEntities db = new DADExampleEntities();
 
         // GET: api/C_Group
-        public IQueryable<C_Group> GetC_Group()
+        public IEnumerable<C_Group> GetC_Group()
         {
             SqlConnection conn = DBConnection.GetConnection();
 
             SqlCommand cmd;
             SqlDataReader rdr;
             string query;
-            List<TeacherModel> output = new List<TeacherModel>();
+            List<C_Group> output = new List<C_Group>();
 
-            return db.C_Group;
+            try
+            {
+
+                conn.Open();
+
+                query = "select * from _Group";
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    output.Add(new C_Group(Int32.Parse(rdr["GroupNumber"].ToString())));
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+            return output;
         }
+        
 
         // GET: api/C_Group/5
         [ResponseType(typeof(C_Group))]
