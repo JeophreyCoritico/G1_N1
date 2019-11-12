@@ -95,7 +95,6 @@ namespace ExampleWebAPI.Controllers
             string query;
             string output = "no record found";
 
-
             try
             {
                 conn.Open();
