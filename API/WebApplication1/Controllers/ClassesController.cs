@@ -22,6 +22,8 @@ namespace WebApplication1.Controllers
             return db.Classes;
         }
 
+        //HELLOOOOOOOOOOOOOOOOOOOOOOOOOO
+
         // GET: api/Classes/5
         //[ResponseType(typeof(Class))]
         //public IHttpActionResult GetClass(int id)
