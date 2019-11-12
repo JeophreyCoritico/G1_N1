@@ -14,16 +14,13 @@ namespace ExampleWebAPI.Controllers
     {
         // GET: api/Teacher
         public IEnumerable<TeacherModel> Get()
-            //public IEnumerable<TeacherModel> Get()
         {
-            //return new string[] { "value1"};
 
             SqlConnection conn = DBConnection.GetConnection();
 
             SqlCommand cmd;
             SqlDataReader rdr;
             string query;
-            //List<TeacherModel> output = new List<TeacherModel>();
             List<TeacherModel> output = new List<TeacherModel>();
 
             try
@@ -37,37 +34,12 @@ namespace ExampleWebAPI.Controllers
                 //read the data for that command
                 rdr = cmd.ExecuteReader();
 
-                //int tIDint = 0;
-                //string tID = rdr.GetValue(0).ToString();
-                //tIDint = int.Parse(tID);
-                //tIDint = Convert.ToInt32(tID);
-
                 while (rdr.Read())
                 {
-                    /*
-                    output.Add(
-                        "TeacherID: " + rdr.GetValue(0) +
-                        ", GivenName: " + rdr.GetValue(1) + 
-                        ", Surname: " + rdr.GetValue(2) + 
-                        ", TeacherPassword: " + rdr.GetValue(3));
-
-                    */
-
-
                     output.Add(new TeacherModel(Int32.Parse(rdr["TeacherID"].ToString()),
                                                 rdr["GivenName"].ToString(),
                                                 rdr["Surname"].ToString(),
                                                 rdr["TeacherPassword"].ToString()));
-
-
-
-                        /*
-                                tIDint, 
-                      int32.Parse(rdr.GetValue(0).ToString())
-                                rdr.GetValue(1).ToString(),
-                                rdr.GetValue(2).ToString(),
-                                rdr.GetValue(3).ToString()));
-                                */
                 }
 
             }
