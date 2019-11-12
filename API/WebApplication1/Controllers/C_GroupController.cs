@@ -107,32 +107,42 @@ namespace WebApplication1.Controllers
 
         // POST: api/C_Group
         [ResponseType(typeof(C_Group))]
-        public IHttpActionResult PostC_Group(C_Group c_Group)
+        public string PostC_Group(C_Group MGroup)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            db.C_Group.Add(c_Group);
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            string query;
+            string output;
 
             try
             {
-                db.SaveChanges();
+
+                conn.Open();
+
+                query = "insert into _Group(GroupNumber) values ("
+                    + MGroup.GroupNumber + ")";
+
+
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Rows Inserted";
+
             }
-            catch (DbUpdateException)
+            catch (Exception e)
             {
-                if (C_GroupExists(c_Group.GroupNumber))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                output = e.Message;
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = c_Group.GroupNumber }, c_Group);
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+
+            return output;
         }
 
         // DELETE: api/C_Group/5
