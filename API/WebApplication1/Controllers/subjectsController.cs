@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ExampleWebAPI;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -17,9 +19,47 @@ namespace WebApplication1.Controllers
         private DADExampleEntities db = new DADExampleEntities();
 
         // GET: api/subjects
-        public IQueryable<subject> Getsubjects()
+        public IEnumerable<subject> Getsubjects()
         {
-            return db.subjects;
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            SqlDataReader rdr;
+            string query;
+            List<subject> output = new List<subject>();
+
+            try
+            {
+
+                conn.Open();
+
+                query = "select * from subject";
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                rdr = cmd.ExecuteReader();
+
+
+                while (rdr.Read())
+                {
+                    output.Add(new subject(rdr["SubjectCode"].ToString(),
+                                           rdr["Description"].ToString()));
+                                                
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+
+                //throw e;
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+            return output;
         }
 
         // GET: api/subjects/5
@@ -72,32 +112,43 @@ namespace WebApplication1.Controllers
 
         // POST: api/subjects
         [ResponseType(typeof(subject))]
-        public IHttpActionResult Postsubject(subject subject)
+        public string Postsubject(subject subject)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            SqlConnection conn = DBConnection.GetConnection();
 
-            db.subjects.Add(subject);
+            SqlCommand cmd;
+            string query;
+            string output;
 
             try
             {
-                db.SaveChanges();
+
+                conn.Open();
+
+                query = "insert into subject(SubjectCode, Description) values ('"
+                    + subject.SubjectCode + "', '"
+                    + subject.Description + "')";
+
+
+
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Rows Inserted";
+
             }
-            catch (DbUpdateException)
+            catch (Exception e)
             {
-                if (subjectExists(subject.SubjectCode))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                output = e.Message;
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = subject.SubjectCode }, subject);
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+
+            return output;
         }
 
         // DELETE: api/subjects/5

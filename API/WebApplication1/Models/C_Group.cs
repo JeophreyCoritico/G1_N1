@@ -22,6 +22,11 @@ namespace WebApplication1.Models
         }
     
         public int GroupNumber { get; set; }
+
+        public C_Group(int GN)
+        {
+            GroupNumber = GN;
+        }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Class> Classes { get; set; }

@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.Models;
+using System.Data.SqlClient;
+using ExampleWebAPI;
 
 namespace WebApplication1.Controllers
 {
@@ -19,23 +21,106 @@ namespace WebApplication1.Controllers
         // GET: api/Classes
         public IQueryable<Class> GetClasses()
         {
-            return db.Classes;
-        }
+            List<IQueryable<Class>> output = new List<IQueryable<Class>>();
+            try
+            {
 
+                conn.Open();
+
+                query = "select * from Class";
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    output.Add(new TeacherModel(Int32.Parse(rdr["TeacherID"].ToString()),
+                                                rdr["GroupNumber"].ToString(),
+                                                rdr["SubjectCode"].ToString(),
+                                                rdr["RoomNo"].ToString(),
+                                                rdr["Day"].ToString(),
+                                                rdr["Description"].ToString(),
+                                                rdr["StartTime"].ToString(),
+                                                rdr["EndTime"].ToString(),
+                                                rdr["Capacity"].ToString()));
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+
+                //throw e;
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+            return output;
+        }
         //HELLOOOOOOOOOOOOOOOOOOOOOOOOOO
 
         // GET: api/Classes/5
-        [ResponseType(typeof(Class))]
-        public IHttpActionResult GetClass(int id)
-        {
-            Class @class = db.Classes.Find(id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
+        //[ResponseType(typeof(Class))]
+        //public IHttpActionResult GetClass(int id)
+        //{
+        //    Class @class = db.Classes.Find(id);
+        //    if (@class == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(@class);
+        //    return Ok(@class);
+        //}
+
+        public string GetClass(int id)
+        {
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            SqlDataReader rdr;
+            string query;
+            string output = "no record found";
+
+            try
+            {
+                conn.Open();
+
+                query = "select * from Class where TeacherID = " + id;
+                cmd = new SqlCommand(query, conn);
+
+                rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    output =
+                    "{TeacherID: " + rdr.GetValue(0) +
+                    ", GroupNumber: \"" + rdr.GetValue(1) + "\"" +
+                    ", SubjectCode: \"" + rdr.GetValue(2) + "\"" +
+                    ", RoomNo: \"" + rdr.GetValue(3) + "\"" +
+                    ", Day: \"" + rdr.GetValue(4) + "\"" +
+                    ", Description: \"" + rdr.GetValue(5) + "\"" +
+                    ", StartTime: \"" + rdr.GetValue(6) + "\"" +
+                    ", EndTime: \"" + rdr.GetValue(7) + "\"" +
+                    ", Capacity: \"" + rdr.GetValue(8) + "\"}";
+                }
+            }
+            catch (Exception e)
+            {
+                output = e.Message;
+            }
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+            conn.Close();
+
+            return output;
         }
+
 
         // PUT: api/Classes/5
         [ResponseType(typeof(void))]
