@@ -11,7 +11,7 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Attendance
     {
         public System.DateTime SignIn { get; set; }
@@ -23,8 +23,22 @@ namespace WebApplication1.Models
         public int Barcode { get; set; }
         public Nullable<bool> EarlyLeave { get; set; }
         public Nullable<bool> Late { get; set; }
-    
+
         public virtual Class Class { get; set; }
         public virtual Student Student { get; set; }
-    }
+
+        public Attendance(DateTime signIn, DateTime signOut, int teacherID, int groupNumber, string subjectCode, string roomNo, int barcode, Boolean earlyLeave, Boolean late)
+        {
+            this.SignIn = signIn;
+            this.SignOut = signOut;
+            this.TeacherID = teacherID;
+            this.GroupNumber = groupNumber;
+            this.SubjectCode = subjectCode;
+            this.RoomNo = roomNo;
+            this.Barcode = barcode;
+            this.EarlyLeave = earlyLeave;
+            this.Late = late;
+        }
+}
+   
 }

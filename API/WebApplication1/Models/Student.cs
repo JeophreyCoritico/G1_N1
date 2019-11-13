@@ -25,6 +25,16 @@ namespace WebApplication1.Models
         public string GivenName { get; set; }
         public string Surname { get; set; }
         public int StudentID { get; set; }
+
+        public Student(int code, int GNumber, string GName, string SName, int SID)
+        {
+            this.Barcode = code;
+            this.GroupNumber = GNumber;
+            this.GivenName = GName;
+            this.Surname = SName;
+            this.StudentID = SID;
+
+        }
     
         public virtual C_Group C_Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
