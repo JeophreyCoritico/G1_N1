@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.Models;
+using System.Data.SqlClient;
+using ExampleWebAPI;
 
 namespace WebApplication1.Controllers
 {
@@ -19,7 +21,6 @@ namespace WebApplication1.Controllers
         // GET: api/Classes
         public IQueryable<Class> GetClasses()
         {
-            return db.Classes;
             List<IQueryable<Class>> output = new List<IQueryable<Class>>();
             try
             {
