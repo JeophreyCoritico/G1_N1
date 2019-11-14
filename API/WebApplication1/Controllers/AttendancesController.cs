@@ -46,7 +46,7 @@ namespace WebApplication1.Controllers
                                   rdr["RoomNo"].ToString(),
                                   Int32.Parse(rdr["Barcode"].ToString()),
                                   Convert.ToBoolean(rdr["EarlyLeave"].ToString()),
-                                  Convert.ToBoolean(rdr["EarlyLeave"].ToString())));
+                                  Convert.ToBoolean(rdr["Late"].ToString())));
 
                 }
 
