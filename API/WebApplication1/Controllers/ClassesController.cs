@@ -16,12 +16,17 @@ namespace WebApplication1.Controllers
 {
     public class ClassesController : ApiController
     {
-        private DADExampleEntities db = new DADExampleEntities();
+        
 
         // GET: api/Classes
-        public IQueryable<Class> GetClasses()
+        public IEnumerable<Class> Get()
         {
-            List<IQueryable<Class>> output = new List<IQueryable<Class>>();
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            SqlDataReader rdr;
+            string query;
+            List<Class> output = new List<Class>();
             try
             {
 
@@ -35,15 +40,15 @@ namespace WebApplication1.Controllers
 
                 while (rdr.Read())
                 {
-                    output.Add(new TeacherModel(Int32.Parse(rdr["TeacherID"].ToString()),
-                                                rdr["GroupNumber"].ToString(),
+                    output.Add(new  Class(Int32.Parse(rdr["TeacherID"].ToString()),
+                                                Int32.Parse(rdr["GroupNumber"].ToString()),
                                                 rdr["SubjectCode"].ToString(),
                                                 rdr["RoomNo"].ToString(),
                                                 rdr["Day"].ToString(),
                                                 rdr["Description"].ToString(),
-                                                rdr["StartTime"].ToString(),
-                                                rdr["EndTime"].ToString(),
-                                                rdr["Capacity"].ToString()));
+                                                TimeSpan.Parse(rdr["StartTime"].ToString()),
+                                                TimeSpan.Parse(rdr["EndTime"].ToString()),
+                                                Int32.Parse(rdr["Capacity"].ToString())));
                 }
 
             }
@@ -123,98 +128,135 @@ namespace WebApplication1.Controllers
 
 
         // PUT: api/Classes/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutClass(int id, Class @class)
+        public string Put(int id,  Class MClass)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != @class.TeacherID)
-            {
-                return BadRequest();
-            }
+            SqlConnection conn = DBConnection.GetConnection();
 
-            db.Entry(@class).State = EntityState.Modified;
+            SqlCommand cmd;
+            string query;
+            string output;
 
             try
             {
-                db.SaveChanges();
+
+                conn.Open();
+
+                query = "update Class set GroupNumber = '" + MClass.GroupNumber +
+                  "', SubjectCode = '" + MClass.SubjectCode +
+                  "', RoomNo = '" + MClass.RoomNo +
+                  "', Day = '" + MClass.Day +
+                  "', Description = '" +MClass.Description +
+                  "', StartTime = '" + MClass.StartTime +
+                  "', EndTime = '" + MClass.EndTime +
+                  "', Capacity = '" + MClass.Capacity +
+                  "' where TeacherID = " + id;
+
+
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Rows updated";
+
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!ClassExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                output = e.Message;
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+            conn.Close();
+
+            return output;
         }
 
         // POST: api/Classes
-        [ResponseType(typeof(Class))]
-        public IHttpActionResult PostClass(Class @class)
+        public string Post(Class MClass)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            db.Classes.Add(@class);
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            string query;
+            string output;
 
             try
             {
-                db.SaveChanges();
+
+                conn.Open();
+
+                query = "insert into Class(TeacherID, GroupNumber, SubjectCode, RoomNo, Day, Description, StartTime, EndTime, Capacity) values ("
+                  + MClass.TeacherID + ", '"
+                  + MClass.GroupNumber + "', '"
+                  + MClass.SubjectCode + "', '"
+                  + MClass.RoomNo + "', '"
+                   + MClass.Day + "', '"
+                   + MClass.Description + "', '"
+                    + MClass.StartTime + "', '"
+                    + MClass.EndTime + "', '"
+                  + MClass.Capacity + "')";
+
+
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Rows Inserted";
+
             }
-            catch (DbUpdateException)
+            catch (Exception e)
             {
-                if (ClassExists(@class.TeacherID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
+                output = e.Message;
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = @class.TeacherID }, @class);
+            finally
+            {
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
+            }
+
+            return output;
         }
 
         // DELETE: api/Classes/5
-        [ResponseType(typeof(Class))]
-        public IHttpActionResult DeleteClass(int id)
+        public string Delete(int id)
         {
-            Class @class = db.Classes.Find(id);
-            if (@class == null)
+
+            SqlConnection conn = DBConnection.GetConnection();
+
+            SqlCommand cmd;
+            string query;
+            string output = "No Class found";
+
+            try
             {
-                return NotFound();
+
+                conn.Open();
+
+                query = "Delete From Class where TeacherID = " + id;
+
+                cmd = new SqlCommand(query, conn);
+
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Row Deleted";
+
+            }
+            catch (Exception e)
+            {
+                output = e.Message;
             }
 
-            db.Classes.Remove(@class);
-            db.SaveChanges();
-
-            return Ok(@class);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            finally
             {
-                db.Dispose();
+                if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
-            base.Dispose(disposing);
-        }
+            conn.Close();
 
-        private bool ClassExists(int id)
-        {
-            return db.Classes.Count(e => e.TeacherID == id) > 0;
+            return output;
         }
     }
 }

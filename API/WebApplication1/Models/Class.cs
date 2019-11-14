@@ -36,5 +36,18 @@ namespace WebApplication1.Models
         public virtual room room { get; set; }
         public virtual subject subject { get; set; }
         public virtual Teacher Teacher { get; set; }
+
+        public Class(int teacherID, int groupNo, string subjectCode, string roomNo, string day, string description, System.TimeSpan starttime, System.TimeSpan endTime, int capacity)
+        {
+            this.TeacherID = teacherID;
+            this.GroupNumber = groupNo;
+            this.SubjectCode = SubjectCode;
+            this.RoomNo = roomNo;
+            this.Day = day;
+            this.Description = description;
+            this.StartTime = starttime;
+            this.EndTime = endTime;
+            this.Capacity = capacity;
+        }
     }
 }

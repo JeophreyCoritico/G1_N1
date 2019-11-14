@@ -27,7 +27,7 @@ namespace WebApplication1.Models
         public virtual Class Class { get; set; }
         public virtual Student Student { get; set; }
 
-        public Attendance(DateTime signIn, DateTime signOut, int teacherID, int groupNumber, string subjectCode, string roomNo, int barcode, Boolean earlyLeave, Boolean late)
+        public Attendance(DateTime signIn, DateTime signOut, int teacherID, int groupNumber, string subjectCode, string roomNo, int barcode, bool earlyLeave, bool late)
         {
             this.SignIn = signIn;
             this.SignOut = signOut;

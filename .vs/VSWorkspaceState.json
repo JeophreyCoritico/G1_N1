@@ -3,6 +3,7 @@
     "",
     "\\API",
     "\\API\\WebApplication1",
+    "\\API\\WebApplication1\\Controllers",
     "\\Database",
     "\\Database\\test_Database",
     "\\Database\\test_Database\\Database1",

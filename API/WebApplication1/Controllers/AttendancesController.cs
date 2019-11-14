@@ -11,10 +11,10 @@ using ExampleWebAPI;
 
 namespace WebApplication1.Controllers
 {
-    public class   AttendancesController : ApiController
+    public class AttendancesController : ApiController
     {
-        // GET: api/Teacher
-        public IEnumerable<Attendance> Get()
+        // GET: api/Attendance
+        public IEnumerable<Attendance> Get()
         {
 
             SqlConnection conn = DBConnection.GetConnection();
@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
             SqlCommand cmd;
             SqlDataReader rdr;
             string query;
-            List<Attendance> output = new List<Student>();
+            List<Attendance> output = new List<Attendance>();
 
             try
             {
@@ -32,23 +32,21 @@ namespace WebApplication1.Controllers
                 query = "select * from Attendance";
                 cmd = new SqlCommand(query, conn);
 
-                //read the data for that command
-                rdr = cmd.ExecuteReader();
+                //read the data for that command
+                rdr = cmd.ExecuteReader();
 
                 while (rdr.Read())
                 {
                     output.Add(new Attendance(
-                                              //rdr["SignIn"].ToString(),
-                                              //rdr["SignOut"].ToString(), 
-                                              rdr["SignIn"].ToString(),
-                                              rdr["SignOut"].ToString(),
-                                              Int32.Parse(rdr["TeacherID"].ToString()),
-                                                Int32.Parse(rdr["GroupNumber"].ToString()),
-                                                rdr["SubjectCode"].ToString(),
-                                                rdr["RoomNo"].ToString(),
-                                                Int32.Parse(rdr["Barcode"].ToString(),
-                                                Convert.ToBoolean(rdr["EarlyLeave"].ToString()),
-                                                rdr["Late"].ToString()));
+                                 DateTime.Parse(rdr["SignIn"].ToString()),
+                                 DateTime.Parse(rdr["SignOut"].ToString()),
+                                 Int32.Parse(rdr["TeacherID"].ToString()),
+                                  Int32.Parse(rdr["GroupNumber"].ToString()),
+                                  rdr["SubjectCode"].ToString(),
+                                  rdr["RoomNo"].ToString(),
+                                  Int32.Parse(rdr["Barcode"].ToString()),
+                                  Convert.ToBoolean(rdr["EarlyLeave"].ToString()),
+                                  Convert.ToBoolean(rdr["EarlyLeave"].ToString())));
 
                 }
 
@@ -57,8 +55,8 @@ namespace WebApplication1.Controllers
             {
                 throw e;
 
-                //throw e;
-            }
+                //throw e;
+            }
             finally
             {
                 if (conn.State == System.Data.ConnectionState.Open)
@@ -67,8 +65,8 @@ namespace WebApplication1.Controllers
             return output;
         }
 
-        // GET: api/Teacher/5
-        public string Get(int id)
+        // GET: api/Attendance/5
+        public string Get(int id)
         {
             SqlConnection conn = DBConnection.GetConnection();
 
@@ -90,11 +88,15 @@ namespace WebApplication1.Controllers
                 while (rdr.Read())
                 {
                     output =
-                    "{Barcode: " + rdr.GetValue(0) +
-                    ", GroupNumber: \"" + rdr.GetValue(1) + "\"" +
-                    ", GivenName: \"" + rdr.GetValue(2) + "\"" +
-                    ",  Surname: \"" + rdr.GetValue(3) + "\"}" +
-                    ", StudentID: \"" + rdr.GetValue(4) + "\"}";
+                    "{SignIn: " + rdr.GetValue(0) +
+                    ", SignOut: \"" + rdr.GetValue(1) + "\"" +
+                    ", TeacherID: \"" + rdr.GetValue(2) + "\"" +
+                    ",  GroupNumber: \"" + rdr.GetValue(3) + "\"}" +
+                    ",  SubjectCode: \"" + rdr.GetValue(4) + "\"}" +
+                    ",  RoomNo: \"" + rdr.GetValue(5) + "\"}" +
+                    ",  Barcode: \"" + rdr.GetValue(6) + "\"}" +
+                    ",  EarlyLeave: \"" + rdr.GetValue(7) + "\"}" +
+                    ", Late: \"" + rdr.GetValue(8) + "\"}";
                 }
             }
             catch (Exception e)
@@ -110,8 +112,8 @@ namespace WebApplication1.Controllers
 
             return output;
         }
-        // POST: api/Teacher
-        public string Post(Student MStudent)
+        // POST: api/Attendance
+        public string Post(Attendance attendance)
         {
 
             SqlConnection conn = DBConnection.GetConnection();
@@ -125,18 +127,22 @@ namespace WebApplication1.Controllers
 
                 conn.Open();
 
-                query = "insert into Student(Barcode, GroupNumber, GivenName, Surname, StudentID) values ("
-                    + MStudent.Barcode + ", '"
-                    + MStudent.GroupNumber + "', '"
-                    + MStudent.GivenName + "', '"
-                     + MStudent.Surname + "', '"
-                    + MStudent.StudentID + "')";
+                query = "insert into Attendance(SignIn, SignOut, TeacherID, GroupNumber, SubjectCode, RoomNo, Barcode, EarlyLeave, Late ) values ("
+                  + attendance.SignIn + ", '"
+                  + attendance.SignOut + "', '"
+                  + attendance.TeacherID + "', '"
+                  + attendance.GroupNumber + "', '"
+                   + attendance.SubjectCode + "', '"
+                   + attendance.RoomNo + "', '"
+                    + attendance.Barcode + "', '"
+                    + attendance.EarlyLeave + "', '"
+                  + attendance.Late + "')";
 
 
                 cmd = new SqlCommand(query, conn);
 
-                //read the data for that command
-                output = cmd.ExecuteNonQuery().ToString() + " Rows Inserted";
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Rows Inserted";
 
             }
             catch (Exception e)
@@ -153,8 +159,8 @@ namespace WebApplication1.Controllers
             return output;
         }
 
-        // PUT: api/Teacher/5
-        public string Put(int id, Student MStudent)
+        // PUT: api/Attendance/5
+        public string Put(int id, Attendance attendance)
         {
 
             SqlConnection conn = DBConnection.GetConnection();
@@ -168,17 +174,21 @@ namespace WebApplication1.Controllers
 
                 conn.Open();
 
-                query = "update Student set Barcode = '" + MStudent.Barcode +
-                    "', GroupNumber = '" + MStudent.GroupNumber +
-                    "', GivenName = '" + MStudent.GivenName +
-                    "', Surname = '" + MStudent.Surname +
-                    "' where StudentID = " + id;
+                query = "update Attendance set SignIn = '" + attendance.SignIn +
+                  "', SignOut = '" + attendance.SignOut +
+                  "', TeacherID = '" + attendance.TeacherID +
+                  "', GroupNumber = '" + attendance.GroupNumber +
+                  "', SubjectCode = '" + attendance.SubjectCode +
+                  "', RoomNo = '" + attendance.RoomNo +
+                  "', EarlyLeave = '" + attendance.EarlyLeave +
+                  "', Late = '" + attendance.Late +
+                  "' where Barcode = " + id;
 
 
                 cmd = new SqlCommand(query, conn);
 
-                //read the data for that command
-                output = cmd.ExecuteNonQuery().ToString() + " Rows updated";
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Rows updated";
 
             }
             catch (Exception e)
@@ -196,27 +206,27 @@ namespace WebApplication1.Controllers
             return output;
         }
 
-        // DELETE: api/Teacher/5
-        public string Delete(int id)
+        // DELETE: api/Attendance/5
+        public string Delete(int id)
         {
 
             SqlConnection conn = DBConnection.GetConnection();
 
             SqlCommand cmd;
             string query;
-            string output = "No student found";
+            string output = "No Attendance found";
 
             try
             {
 
                 conn.Open();
 
-                query = "Delete From Student where StudentID = " + id;
+                query = "Delete From Attendance where Barcode = " + id;
 
                 cmd = new SqlCommand(query, conn);
 
-                //read the data for that command
-                output = cmd.ExecuteNonQuery().ToString() + " Row Deleted";
+                //read the data for that command
+                output = cmd.ExecuteNonQuery().ToString() + " Row Deleted";
 
             }
             catch (Exception e)
