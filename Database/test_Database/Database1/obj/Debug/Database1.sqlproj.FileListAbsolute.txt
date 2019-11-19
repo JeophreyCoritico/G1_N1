@@ -20,3 +20,13 @@ C:\Users\102575814\source\repos\G1_N1\Database\test_Database\Database1\bin\Debug
 C:\Users\102575814\source\repos\G1_N1\Database\test_Database\Database1\obj\Debug\Database1.sqlprojAssemblyReference.cache
 C:\Users\102575814\source\repos\G1_N1\Database\test_Database\Database1\obj\Debug\Database1.dll
 C:\Users\102575814\source\repos\G1_N1\Database\test_Database\Database1\obj\Debug\Database1.pdb
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\bin\Debug\Database1.dacpac
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\bin\Debug\Database1.dll
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\bin\Debug\Database1.pdb
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\Database1.sqlprojAssemblyReference.cache
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\Model.xml
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\refactor.xml
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\postdeploy.sql
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\predeploy.sql
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\Database1.dll
+C:\Users\102589705\Source\Repos\G1_N1\Database\test_Database\Database1\obj\Debug\Database1.pdb

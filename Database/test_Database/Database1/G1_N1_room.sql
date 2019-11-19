@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[room]
+CREATE TABLE [dbo].[G1_N1_room]
 (
 	[RoomNo] NVARCHAR(100) PRIMARY KEY NOT NULL 
 )

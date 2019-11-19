@@ -1,5 +1,5 @@
 
-CREATE TABLE dbo.Attendance
+CREATE TABLE dbo.G1_N1_Attendance
 (
     SignIn DATETIME,
     SignOut DATETIME,
@@ -11,6 +11,6 @@ CREATE TABLE dbo.Attendance
 	EarlyLeave BIT,
 	Late BIT,
 	PRIMARY KEY (SignIn, SignOut, TeacherID, GroupNumber, SubjectCode, RoomNo, Barcode),
-	FOREIGN KEY ([TeacherID], [GroupNumber], [SubjectCode], [RoomNo]) REFERENCES [dbo].[Class],
-	FOREIGN KEY ([Barcode], [GroupNumber]) REFERENCES [dbo].[Student]
+	FOREIGN KEY ([TeacherID], [GroupNumber], [SubjectCode], [RoomNo]) REFERENCES [dbo].[G1_N1_Class],
+	FOREIGN KEY ([Barcode], [GroupNumber]) REFERENCES [dbo].[G1_N1_Student]
 );

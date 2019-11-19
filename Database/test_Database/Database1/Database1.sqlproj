@@ -59,13 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Table_Test.sql" />
-    <Build Include="attendance.sql" />
-    <Build Include="class.sql" />
-    <Build Include="group.sql" />
-    <Build Include="room.sql" />
-    <Build Include="student.sql" />
-    <Build Include="teacher.sql" />
-    <Build Include="subject.sql" />
+    <Build Include="G1_N1_attendance.sql" />
+    <Build Include="G1_N1_class.sql" />
+    <Build Include="G1_N1_group.sql" />
+    <Build Include="G1_N1_room.sql" />
+    <Build Include="G1_N1_student.sql" />
+    <Build Include="G1_N1_teacher.sql" />
+    <Build Include="G1_N1_subject.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.Testing_Data.sql" />

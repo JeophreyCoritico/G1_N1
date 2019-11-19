@@ -1,4 +1,4 @@
-CREATE TABLE [dbo].[Class]
+CREATE TABLE [dbo].[G1_N1_Class]
 (
 	--[SubjectCode] NVARCHAR(30) PRIMARY KEY, 
 	[TeacherID] int,
@@ -11,8 +11,8 @@ CREATE TABLE [dbo].[Class]
 	[EndTime] time NOT NULL,
 	[Capacity] int NOT NULL,
 	PRIMARY KEY (TeacherID, GroupNumber, SubjectCode, RoomNo),
-	FOREIGN KEY (TeacherID) REFERENCES dbo.Teacher,
-	FOREIGN KEY (GroupNumber) REFERENCES dbo._Group,
-	FOREIGN KEY (SubjectCode) REFERENCES dbo.[subject],
-	FOREIGN KEY (RoomNo) REFERENCES dbo.[room]
+	FOREIGN KEY (TeacherID) REFERENCES dbo.G1_N1_Teacher,
+	FOREIGN KEY (GroupNumber) REFERENCES dbo.G1_N1_Group,
+	FOREIGN KEY (SubjectCode) REFERENCES dbo.[G1_N1_subject],
+	FOREIGN KEY (RoomNo) REFERENCES dbo.[G1_N1_room]
 )
