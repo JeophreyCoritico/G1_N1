@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3d2fc782df874a2ca95cf79df3588b00" Name="Diagram1">
+        <EntityTypeShape EntityType="DADModel.G1_N1_Attendance" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADModel.G1_N1_Class" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADModel.G1_N1_Group" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADModel.G1_N1_room" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADModel.G1_N1_Student" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADModel.G1_N1_subject" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DADModel.G1_N1_Teacher" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Attendance__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Attendance__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Cla__Group__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Cla__RoomN__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Cla__Subje__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Cla__Teach__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="DADModel.FK__G1_N1_Stu__Group__5CD6CB2B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

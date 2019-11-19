@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DADModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="G1_N1_Attendance">
+          <Key>
+            <PropertyRef Name="SignIn" />
+            <PropertyRef Name="SignOut" />
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="SignIn" Type="datetime" Nullable="false" />
+          <Property Name="SignOut" Type="datetime" Nullable="false" />
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Barcode" Type="int" Nullable="false" />
+          <Property Name="EarlyLeave" Type="bit" />
+          <Property Name="Late" Type="bit" />
+        </EntityType>
+        <EntityType Name="G1_N1_Class">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Day" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="G1_N1_Group">
+          <Key>
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="G1_N1_room">
+          <Key>
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="RoomNo" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="G1_N1_Student">
+          <Key>
+            <PropertyRef Name="Barcode" />
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="Barcode" Type="int" Nullable="false" />
+          <Property Name="GroupNumber" Type="int" Nullable="false" />
+          <Property Name="GivenName" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="G1_N1_subject">
+          <Key>
+            <PropertyRef Name="SubjectCode" />
+          </Key>
+          <Property Name="SubjectCode" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="G1_N1_Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="int" Nullable="false" />
+          <Property Name="GivenName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TeacherPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__G1_N1_Attendance__571DF1D5">
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="1" />
+          <End Role="G1_N1_Attendance" Type="Self.G1_N1_Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Class">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="G1_N1_Attendance">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Attendance__5812160E">
+          <End Role="G1_N1_Student" Type="Self.G1_N1_Student" Multiplicity="1" />
+          <End Role="G1_N1_Attendance" Type="Self.G1_N1_Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Student">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="G1_N1_Attendance">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__Group__59FA5E80">
+          <End Role="G1_N1_Group" Type="Self.G1_N1_Group" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__RoomN__5BE2A6F2">
+          <End Role="G1_N1_room" Type="Self.G1_N1_room" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_room">
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__Subje__5AEE82B9">
+          <End Role="G1_N1_subject" Type="Self.G1_N1_subject" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_subject">
+              <PropertyRef Name="SubjectCode" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="SubjectCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__Teach__59063A47">
+          <End Role="G1_N1_Teacher" Type="Self.G1_N1_Teacher" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Stu__Group__5CD6CB2B">
+          <End Role="G1_N1_Group" Type="Self.G1_N1_Group" Multiplicity="1" />
+          <End Role="G1_N1_Student" Type="Self.G1_N1_Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="G1_N1_Student">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DADModelStoreContainer">
+          <EntitySet Name="G1_N1_Attendance" EntityType="Self.G1_N1_Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="G1_N1_Class" EntityType="Self.G1_N1_Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="G1_N1_Group" EntityType="Self.G1_N1_Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="G1_N1_room" EntityType="Self.G1_N1_room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="G1_N1_Student" EntityType="Self.G1_N1_Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="G1_N1_subject" EntityType="Self.G1_N1_subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="G1_N1_Teacher" EntityType="Self.G1_N1_Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__G1_N1_Attendance__571DF1D5" Association="Self.FK__G1_N1_Attendance__571DF1D5">
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+            <End Role="G1_N1_Attendance" EntitySet="G1_N1_Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Attendance__5812160E" Association="Self.FK__G1_N1_Attendance__5812160E">
+            <End Role="G1_N1_Student" EntitySet="G1_N1_Student" />
+            <End Role="G1_N1_Attendance" EntitySet="G1_N1_Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__Group__59FA5E80" Association="Self.FK__G1_N1_Cla__Group__59FA5E80">
+            <End Role="G1_N1_Group" EntitySet="G1_N1_Group" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__RoomN__5BE2A6F2" Association="Self.FK__G1_N1_Cla__RoomN__5BE2A6F2">
+            <End Role="G1_N1_room" EntitySet="G1_N1_room" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__Subje__5AEE82B9" Association="Self.FK__G1_N1_Cla__Subje__5AEE82B9">
+            <End Role="G1_N1_subject" EntitySet="G1_N1_subject" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__Teach__59063A47" Association="Self.FK__G1_N1_Cla__Teach__59063A47">
+            <End Role="G1_N1_Teacher" EntitySet="G1_N1_Teacher" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Stu__Group__5CD6CB2B" Association="Self.FK__G1_N1_Stu__Group__5CD6CB2B">
+            <End Role="G1_N1_Group" EntitySet="G1_N1_Group" />
+            <End Role="G1_N1_Student" EntitySet="G1_N1_Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DADModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="G1_N1_Attendance">
+          <Key>
+            <PropertyRef Name="SignIn" />
+            <PropertyRef Name="SignOut" />
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+            <PropertyRef Name="Barcode" />
+          </Key>
+          <Property Name="SignIn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SignOut" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <Property Name="SubjectCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Barcode" Type="Int32" Nullable="false" />
+          <Property Name="EarlyLeave" Type="Boolean" />
+          <Property Name="Late" Type="Boolean" />
+          <NavigationProperty Name="G1_N1_Class" Relationship="Self.FK__G1_N1_Attendance__571DF1D5" FromRole="G1_N1_Attendance" ToRole="G1_N1_Class" />
+          <NavigationProperty Name="G1_N1_Student" Relationship="Self.FK__G1_N1_Attendance__5812160E" FromRole="G1_N1_Attendance" ToRole="G1_N1_Student" />
+        </EntityType>
+        <EntityType Name="G1_N1_Class">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+            <PropertyRef Name="GroupNumber" />
+            <PropertyRef Name="SubjectCode" />
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <Property Name="SubjectCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Day" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="G1_N1_Attendance" Relationship="Self.FK__G1_N1_Attendance__571DF1D5" FromRole="G1_N1_Class" ToRole="G1_N1_Attendance" />
+          <NavigationProperty Name="G1_N1_Group" Relationship="Self.FK__G1_N1_Cla__Group__59FA5E80" FromRole="G1_N1_Class" ToRole="G1_N1_Group" />
+          <NavigationProperty Name="G1_N1_room" Relationship="Self.FK__G1_N1_Cla__RoomN__5BE2A6F2" FromRole="G1_N1_Class" ToRole="G1_N1_room" />
+          <NavigationProperty Name="G1_N1_subject" Relationship="Self.FK__G1_N1_Cla__Subje__5AEE82B9" FromRole="G1_N1_Class" ToRole="G1_N1_subject" />
+          <NavigationProperty Name="G1_N1_Teacher" Relationship="Self.FK__G1_N1_Cla__Teach__59063A47" FromRole="G1_N1_Class" ToRole="G1_N1_Teacher" />
+        </EntityType>
+        <EntityType Name="G1_N1_Group">
+          <Key>
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="G1_N1_Class" Relationship="Self.FK__G1_N1_Cla__Group__59FA5E80" FromRole="G1_N1_Group" ToRole="G1_N1_Class" />
+          <NavigationProperty Name="G1_N1_Student" Relationship="Self.FK__G1_N1_Stu__Group__5CD6CB2B" FromRole="G1_N1_Group" ToRole="G1_N1_Student" />
+        </EntityType>
+        <EntityType Name="G1_N1_room">
+          <Key>
+            <PropertyRef Name="RoomNo" />
+          </Key>
+          <Property Name="RoomNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="G1_N1_Class" Relationship="Self.FK__G1_N1_Cla__RoomN__5BE2A6F2" FromRole="G1_N1_room" ToRole="G1_N1_Class" />
+        </EntityType>
+        <EntityType Name="G1_N1_Student">
+          <Key>
+            <PropertyRef Name="Barcode" />
+            <PropertyRef Name="GroupNumber" />
+          </Key>
+          <Property Name="Barcode" Type="Int32" Nullable="false" />
+          <Property Name="GroupNumber" Type="Int32" Nullable="false" />
+          <Property Name="GivenName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="G1_N1_Attendance" Relationship="Self.FK__G1_N1_Attendance__5812160E" FromRole="G1_N1_Student" ToRole="G1_N1_Attendance" />
+          <NavigationProperty Name="G1_N1_Group" Relationship="Self.FK__G1_N1_Stu__Group__5CD6CB2B" FromRole="G1_N1_Student" ToRole="G1_N1_Group" />
+        </EntityType>
+        <EntityType Name="G1_N1_subject">
+          <Key>
+            <PropertyRef Name="SubjectCode" />
+          </Key>
+          <Property Name="SubjectCode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="G1_N1_Class" Relationship="Self.FK__G1_N1_Cla__Subje__5AEE82B9" FromRole="G1_N1_subject" ToRole="G1_N1_Class" />
+        </EntityType>
+        <EntityType Name="G1_N1_Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="Int32" Nullable="false" />
+          <Property Name="GivenName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeacherPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="G1_N1_Class" Relationship="Self.FK__G1_N1_Cla__Teach__59063A47" FromRole="G1_N1_Teacher" ToRole="G1_N1_Class" />
+        </EntityType>
+        <Association Name="FK__G1_N1_Attendance__571DF1D5">
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="1" />
+          <End Role="G1_N1_Attendance" Type="Self.G1_N1_Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Class">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="G1_N1_Attendance">
+              <PropertyRef Name="TeacherID" />
+              <PropertyRef Name="GroupNumber" />
+              <PropertyRef Name="SubjectCode" />
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Attendance__5812160E">
+          <End Role="G1_N1_Student" Type="Self.G1_N1_Student" Multiplicity="1" />
+          <End Role="G1_N1_Attendance" Type="Self.G1_N1_Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Student">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="G1_N1_Attendance">
+              <PropertyRef Name="Barcode" />
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__Group__59FA5E80">
+          <End Role="G1_N1_Group" Type="Self.G1_N1_Group" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__RoomN__5BE2A6F2">
+          <End Role="G1_N1_room" Type="Self.G1_N1_room" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_room">
+              <PropertyRef Name="RoomNo" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="RoomNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__Subje__5AEE82B9">
+          <End Role="G1_N1_subject" Type="Self.G1_N1_subject" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_subject">
+              <PropertyRef Name="SubjectCode" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="SubjectCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Cla__Teach__59063A47">
+          <End Role="G1_N1_Teacher" Type="Self.G1_N1_Teacher" Multiplicity="1" />
+          <End Role="G1_N1_Class" Type="Self.G1_N1_Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="G1_N1_Class">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__G1_N1_Stu__Group__5CD6CB2B">
+          <End Role="G1_N1_Group" Type="Self.G1_N1_Group" Multiplicity="1" />
+          <End Role="G1_N1_Student" Type="Self.G1_N1_Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="G1_N1_Group">
+              <PropertyRef Name="GroupNumber" />
+            </Principal>
+            <Dependent Role="G1_N1_Student">
+              <PropertyRef Name="GroupNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DADEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="G1_N1_Attendance" EntityType="Self.G1_N1_Attendance" />
+          <EntitySet Name="G1_N1_Class" EntityType="Self.G1_N1_Class" />
+          <EntitySet Name="G1_N1_Group" EntityType="Self.G1_N1_Group" />
+          <EntitySet Name="G1_N1_room" EntityType="Self.G1_N1_room" />
+          <EntitySet Name="G1_N1_Student" EntityType="Self.G1_N1_Student" />
+          <EntitySet Name="G1_N1_subject" EntityType="Self.G1_N1_subject" />
+          <EntitySet Name="G1_N1_Teacher" EntityType="Self.G1_N1_Teacher" />
+          <AssociationSet Name="FK__G1_N1_Attendance__571DF1D5" Association="Self.FK__G1_N1_Attendance__571DF1D5">
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+            <End Role="G1_N1_Attendance" EntitySet="G1_N1_Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Attendance__5812160E" Association="Self.FK__G1_N1_Attendance__5812160E">
+            <End Role="G1_N1_Student" EntitySet="G1_N1_Student" />
+            <End Role="G1_N1_Attendance" EntitySet="G1_N1_Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__Group__59FA5E80" Association="Self.FK__G1_N1_Cla__Group__59FA5E80">
+            <End Role="G1_N1_Group" EntitySet="G1_N1_Group" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__RoomN__5BE2A6F2" Association="Self.FK__G1_N1_Cla__RoomN__5BE2A6F2">
+            <End Role="G1_N1_room" EntitySet="G1_N1_room" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__Subje__5AEE82B9" Association="Self.FK__G1_N1_Cla__Subje__5AEE82B9">
+            <End Role="G1_N1_subject" EntitySet="G1_N1_subject" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Cla__Teach__59063A47" Association="Self.FK__G1_N1_Cla__Teach__59063A47">
+            <End Role="G1_N1_Teacher" EntitySet="G1_N1_Teacher" />
+            <End Role="G1_N1_Class" EntitySet="G1_N1_Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK__G1_N1_Stu__Group__5CD6CB2B" Association="Self.FK__G1_N1_Stu__Group__5CD6CB2B">
+            <End Role="G1_N1_Group" EntitySet="G1_N1_Group" />
+            <End Role="G1_N1_Student" EntitySet="G1_N1_Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DADModelStoreContainer" CdmEntityContainer="DADEntities">
+          <EntitySetMapping Name="G1_N1_Attendance">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_Attendance">
+              <MappingFragment StoreEntitySet="G1_N1_Attendance">
+                <ScalarProperty Name="SignIn" ColumnName="SignIn" />
+                <ScalarProperty Name="SignOut" ColumnName="SignOut" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="EarlyLeave" ColumnName="EarlyLeave" />
+                <ScalarProperty Name="Late" ColumnName="Late" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="G1_N1_Class">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_Class">
+              <MappingFragment StoreEntitySet="G1_N1_Class">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="G1_N1_Group">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_Group">
+              <MappingFragment StoreEntitySet="G1_N1_Group">
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="G1_N1_room">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_room">
+              <MappingFragment StoreEntitySet="G1_N1_room">
+                <ScalarProperty Name="RoomNo" ColumnName="RoomNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="G1_N1_Student">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_Student">
+              <MappingFragment StoreEntitySet="G1_N1_Student">
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="G1_N1_subject">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_subject">
+              <MappingFragment StoreEntitySet="G1_N1_subject">
+                <ScalarProperty Name="SubjectCode" ColumnName="SubjectCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="G1_N1_Teacher">
+            <EntityTypeMapping TypeName="DADModel.G1_N1_Teacher">
+              <MappingFragment StoreEntitySet="G1_N1_Teacher">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="TeacherPassword" ColumnName="TeacherPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
